@@ -1,16 +1,10 @@
 import React from "react";
-import Menu from "./menu";
 
-export interface Props {
+interface ChildProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
-  return (
-    <div className="flex">
-      <Menu />
-      {children}
-    </div>
-  );
+const Layout: React.FC<ChildProps> = ({ children }) => {
+  return <div className="flex w-screen h-screen">{children}</div>;
 };
 export default Layout;
