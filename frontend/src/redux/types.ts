@@ -2,9 +2,9 @@ export const SET_CHATLOG = "SET_CHATLOG";
 export const SEND_MESSAGE = "SEND_MESSAGE";
 
 export interface Message {
-  user: string;
-  text: string;
-  date: object;
+  user: String;
+  text: String;
+  date: Date;
 }
 
 export interface Chatlog {

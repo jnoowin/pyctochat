@@ -3,11 +3,16 @@ import { Chatlog } from "../redux/types";
 
 const Feed: React.FC<Chatlog> = ({ chatlog }: Chatlog) => {
   return (
-    <div>
+    <>
       {chatlog.map((message, index) => (
-        <p key={index}>{message.text}</p>
+        <div className={`bg-blue-${index}00 flex flex-row w-11/12`} key={index}>
+          <p className="flex flex-grow">
+            <b>{message.user}</b>: {message.text}
+          </p>
+          <p>{message.date.toLocaleString()}</p>
+        </div>
       ))}
-    </div>
+    </>
   );
 };
 
