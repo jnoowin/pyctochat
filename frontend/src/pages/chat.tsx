@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import Feed from "../components/Feed";
-import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "../redux/action";
-import { Chatlog } from "../redux/types";
+import { useWebSocketContext } from "../components/WebSocketProvider";
 
 const Chat: React.FC = () => {
-  const chatlog = useSelector((state: Chatlog) => state.chatlog);
-  const dispatch = useDispatch();
+  const ws = useWebSocketContext();
   const [input, setInput] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input) return;
-    dispatch(sendMessage({ user: "blarghnog", text: input, date: new Date() }));
+    ws?.handleSendMessage({ user: "blarghnog", text: input, date: new Date() });
     setInput("");
   };
 
@@ -26,7 +23,7 @@ const Chat: React.FC = () => {
             onChange={(e) => setInput(e.target.value)}
           />
         </form>
-        <Feed chatlog={chatlog} />
+        <Feed />
       </section>
     </div>
   );

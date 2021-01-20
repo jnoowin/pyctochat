@@ -12,28 +12,26 @@ app.use(express.json());
 app.use(cors());
 
 io.on("connection", function (socket) {
-  console.log("server connected", socket.id);
+  console.log("connected", socket.id);
+  socket.on("send-message", function (message) {
+    console.log("send", message);
+    const messageModel = new Message({
+      user: message.user,
+      text: message.text,
+      date: message.date,
+    });
+
+    messageModel
+      .save()
+      .catch((error) => console.log("Error saving message:", error));
+    socket.broadcast.emit("get-message", message);
+  });
 });
 
-app.get("/room/:id", (request, response) => {
+app.get("/room/:id", (_, response) => {
   Message.find({}).then((chatlog) => {
     response.json(chatlog.map((message) => message.toJSON()));
   });
-});
-
-app.post("/room/:id", (request, response) => {
-  const body = request.body;
-
-  const message = new Message({
-    user: body.user,
-    text: body.text,
-    date: new Date(),
-  });
-
-  message
-    .save()
-    .then((result) => response.json(result))
-    .catch((error) => console.log("Error saving message:", error));
 });
 
 const PORT = process.env.PORT;

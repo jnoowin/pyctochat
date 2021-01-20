@@ -1,38 +1,61 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setChatlog } from "../redux/action";
+import { setChatlog, sendMessage } from "../redux/action";
 import { Message } from "../redux/types";
 import io from "socket.io-client";
+import axios from "axios";
 
 export interface ChildProps {
   children: React.ReactNode;
 }
 
-const WebSocketContext = createContext<SocketIOClient.Socket | null>(null);
+interface WebSocketProps {
+  socket: SocketIOClient.Socket;
+  handleSendMessage: Function;
+}
 
-export const useWebSocketContext = () => useContext(WebSocketContext);
+const socket: SocketIOClient.Socket = io("http://localhost:3001", {
+  transports: ["websocket", "polling"],
+});
+
+const WebSocketContext = createContext<WebSocketProps | null>(null);
 
 const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   const dispatch = useDispatch();
-  const socket: SocketIOClient.Socket = io.connect("http://localhost:3001", {
-    transports: ["websocket", "polling"],
-  });
 
-  socket.on("connect", () => {
-    console.log("connected client");
-  });
+  const handleSendMessage = (message: Message) => {
+    console.log("send");
+    dispatch(sendMessage(message));
+    socket.emit("send-message", message);
+  };
 
-  // socket.on("update-chat", (chat: any) => {
-  //   console.log(chat);
-  //   const payload = JSON.parse(chat);
-  //   dispatch(setChatlog(payload));
-  // });
-  // }
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("connected client", socket.id);
+      axios
+        .get("http://localhost:3001/room/1")
+        .then((chatlog) => dispatch(setChatlog(chatlog.data)))
+        .catch((error) => console.log(error));
+    });
+
+    socket.on("get-message", (message: Message) => {
+      console.log("receive", message);
+      dispatch(sendMessage(message));
+    });
+  }, [dispatch]);
+
+  const ws = {
+    socket: socket,
+    handleSendMessage,
+  };
 
   return (
-    <WebSocketContext.Provider value={socket}>
-    <>{children}</>
+    <WebSocketContext.Provider value={ws}>
+      <>{children}</>
     </WebSocketContext.Provider>
   );
 };
+
+export const useWebSocketContext = () => useContext(WebSocketContext);
+
 export default WebSocketProvider;
