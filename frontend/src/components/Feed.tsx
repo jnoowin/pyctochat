@@ -8,7 +8,7 @@ const Feed: React.FC = () => {
   return (
     <div className="flex flex-col-reverse w-11/12 overflow-y-scroll h-full">
       <div className="flex flex-col">
-        {chatlog.map((message: Message, index: number) => (
+        {chatlog.map((message, index) => (
           <MessageContainer key={index} message={message} />
         ))}
       </div>

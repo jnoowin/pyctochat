@@ -6,7 +6,6 @@ const Canvas: React.FC = () => {
 
   useEffect(() => {
     if (canvasContext) canvasContext.initCanvas();
-    console.log(canvasContext);
   }, []);
 
   return (

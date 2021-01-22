@@ -24,22 +24,25 @@ const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   const dispatch = useDispatch();
 
   const handleSendMessage = (message: Message) => {
-    console.log("send");
     dispatch(sendMessage(message));
     socket.emit("send-message", message);
   };
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("connected client", socket.id);
       axios
         .get("http://localhost:3001/room/1")
-        .then((chatlog) => dispatch(setChatlog(chatlog.data)))
+        .then((result) =>
+          result.data.map((message: Message) => {
+            message.date = new Date(message.date);
+            return message;
+          })
+        )
+        .then((chatlog) => dispatch(setChatlog(chatlog)))
         .catch((error) => console.log(error));
     });
 
     socket.on("get-message", (message: Message) => {
-      console.log("receive", message);
       dispatch(sendMessage(message));
     });
   }, [dispatch]);
@@ -50,6 +53,6 @@ const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   );
 };
 
-export const useWebSocketContext = () => useContext(WebSocketContext);
-
 export default WebSocketProvider;
+
+export const useWebSocketContext = () => useContext(WebSocketContext);

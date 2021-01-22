@@ -18,6 +18,7 @@ io.on("connection", function (socket) {
     const messageModel = new Message({
       user: message.user,
       text: message.text,
+      canvas: message.canvas,
       date: message.date,
     });
 

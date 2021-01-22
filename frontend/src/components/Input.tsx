@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import CanvasDraw from "react-canvas-draw";
-import { HexColorPicker, RgbColorPicker } from "react-colorful";
 import { ChromePicker } from "react-color";
 import { useWebSocketContext } from "../components/WebSocketProvider";
 import { useCanvasContext } from "./CanvasProvider";
@@ -77,9 +76,7 @@ const Input = () => {
       </div>
 
       <div className="flex flex-grow flex-col">
-        <label className="absolute bg-blue-100 rounded-tl-md rounded-br-md px-2 border border-black">
-          blarghnog
-        </label>
+        <label className="nameplate">blarghnog</label>
         {showCanvas ? (
           <Canvas />
         ) : (
