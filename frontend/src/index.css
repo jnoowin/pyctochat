@@ -15,3 +15,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.btn-input {
+  @apply bg-gray-100 flex flex-grow;
+}
+
+.canvas-area {
+  @apply bg-white h-60 rounded-md border border-black;
+}

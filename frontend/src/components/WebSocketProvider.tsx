@@ -43,14 +43,8 @@ const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
       dispatch(sendMessage(message));
     });
   }, [dispatch]);
-
-  const ws = {
-    socket: socket,
-    handleSendMessage,
-  };
-
   return (
-    <WebSocketContext.Provider value={ws}>
+    <WebSocketContext.Provider value={{ socket: socket, handleSendMessage }}>
       <>{children}</>
     </WebSocketContext.Provider>
   );
