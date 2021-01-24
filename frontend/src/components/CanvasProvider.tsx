@@ -3,6 +3,7 @@ import { ChildProps } from "./WebSocketProvider";
 
 interface CanvasProps {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
+  contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>;
   initCanvas: Function;
   startDrawing: (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
@@ -11,7 +12,7 @@ interface CanvasProps {
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
   ) => void;
   draw: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
-  clearCanvas: Function;
+  clearCanvas: () => void;
   cleared: boolean;
 }
 
@@ -82,6 +83,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
     <CanvasContext.Provider
       value={{
         canvasRef,
+        contextRef,
         initCanvas,
         startDrawing,
         finishDrawing,

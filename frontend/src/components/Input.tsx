@@ -1,9 +1,11 @@
-import React, { useState, useRef } from "react";
-import CanvasDraw from "react-canvas-draw";
-import { ChromePicker } from "react-color";
+import React, { useState } from "react";
+import SideOptions from "./SideOptions";
 import { useWebSocketContext } from "../components/WebSocketProvider";
 import { useCanvasContext } from "./CanvasProvider";
+import { SendButton, EraseButton, SwapButton } from "./SVG";
 import Canvas from "./Canvas";
+import Keyboard from "react-simple-keyboard";
+import "react-simple-keyboard/build/css/index.css";
 
 const Input = () => {
   const ws = useWebSocketContext();
@@ -14,7 +16,7 @@ const Input = () => {
   const [showCanvas, setShowCanvas] = useState(true);
   const [text, setText] = useState("");
 
-  const handleSend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSend = (e: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
     e.preventDefault();
 
     if ((showCanvas && canvasContext?.cleared) || (!showCanvas && !text))
@@ -37,79 +39,45 @@ const Input = () => {
     }
   };
 
+  const handleSwap = () => {
+    setShowCanvas(!showCanvas);
+  };
+
   return (
-    <div className="w-full flex justify-center m-1">
-      <div className="flex flex-col mr-1">
-        <ChromePicker
-          className={`absolute transform-gpu -translate-x-60 ${
-            color.show ? "" : "hidden"
-          }`}
-          color={color.shade}
-          onChange={() => setColor({ ...color, shade: color.shade })}
-        />
-
-        <button
-          className="btn-input rounded-tr-md border-black border border-b-0"
-          onClick={() => setColor({ ...color, show: !color.show })}
-        >
-          color
-        </button>
-        <input
-          className={`absolute w-28 transform-gpu rotate-90 -translate-x-20 translate-y-40 ${
-            radius.show ? "" : "hidden"
-          }`}
-          type="range"
-          min="1"
-          max="30"
-          value={radius.length}
-          onChange={(e) =>
-            setRadius({ ...radius, length: Number(e.target.value) })
-          }
-        ></input>
-
-        <button
-          className="btn-input rounded-br-md border-black border"
-          onClick={() => setRadius({ ...radius, show: !radius.show })}
-        >
-          radius
-        </button>
-      </div>
-
+    <div className="flex flex-row w-full">
+      <SideOptions />
       <div className="flex flex-grow flex-col">
-        <label className="nameplate">blarghnog</label>
-        {showCanvas ? (
-          <Canvas />
-        ) : (
-          <textarea
-            className="canvas-area"
-            style={{ textIndent: "6rem" }}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+        <div className="w-full">
+          <div className="h-7 bg-white"></div>
+          <label
+            className="absolute block h-7 truncate text-center bg-blue-100 rounded-tl-md rounded-br-md border border-black m-2"
+            style={{ maxWidth: "6rem" }}
           >
-            <br></br>
-          </textarea>
-        )}
-      </div>
-
-      <div className="flex flex-col ml-1">
-        <button
-          className="btn-input border-black border border-b-0 rounded-tl-md"
-          onClick={handleSend}
-        >
-          send
-        </button>
-        <button
-          className="btn-input border-black border border-b-0"
-          onClick={() => canvasContext?.clearCanvas()}
-        >
-          clear
-        </button>
-        <button
-          className="btn-input border-black border rounded-bl-md"
-          onClick={() => setShowCanvas(!showCanvas)}
-        >
-          swap
-        </button>
+            Player 1
+          </label>
+          {/* {showCanvas ? ( */}
+          <Canvas />
+          {/* ) : ( */}
+          {/* <textarea
+              className="canvas-area"
+              style={{ textIndent: "6rem" }}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            >
+              <br></br>
+            </textarea>
+          )} */}
+        </div>
+        <section className="flex flex-row">
+          <div className="keyboard-bg keyboard-btn w-full flex flex-shrink m-2">
+            <Keyboard />
+          </div>
+          <div className="flex flex-shrink flex-col my-2">
+            <SendButton handleSend={handleSend} />
+            <EraseButton handleClear={canvasContext!.clearCanvas} />
+            <SwapButton showCanvas={showCanvas} handleSwap={handleSwap} />
+          </div>
+        </section>
       </div>
     </div>
   );

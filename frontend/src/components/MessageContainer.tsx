@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import { Message } from "../redux/types";
 
 interface MCProps {
@@ -12,7 +12,7 @@ const MessageContainer: React.FC<MCProps> = ({ message }: MCProps) => {
         <div>
           <label className="nameplate">blarghnog</label>
           <img
-            className="canvas-area message-img"
+            className="canvas-area pointer-events-none"
             src={message.canvas}
             alt="message"
             draggable="false"
