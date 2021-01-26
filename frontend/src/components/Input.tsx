@@ -10,6 +10,7 @@ import "react-simple-keyboard/build/css/index.css";
 const Input = () => {
   const ws = useWebSocketContext();
   const canvasContext = useCanvasContext();
+  const [layout, setLayout] = useState("default");
 
   const handleSend = (e: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
     e.preventDefault();
@@ -22,6 +23,19 @@ const Input = () => {
         date: new Date(),
       });
       canvasContext.clearCanvas();
+    }
+  };
+
+  const handleKeyboard = (key: string) => {
+    console.log(key);
+    if (key === "{shift}" || key === "{lock}") {
+      setLayout(layout === "default" ? "shift" : "default");
+      return;
+    }
+    if (canvasContext) {
+      if (key === "{bksp}") canvasContext.handleTyping({ key: "Backspace" });
+      else if (key === "{space}") canvasContext.handleTyping({ key: " " });
+      else canvasContext.handleTyping({ key: key });
     }
   };
 
@@ -38,7 +52,7 @@ const Input = () => {
         </section>
         <section className="flex flex-row max-h-1/2">
           <div className="keyboard-bg keyboard-btn w-full flex flex-shrink m-2 mt-0">
-            <Keyboard />
+            <Keyboard onKeyPress={handleKeyboard} layoutName={layout} />
           </div>
           <div className="flex flex-col flex-shrink flex-grow mb-2">
             <SendButton handleSend={handleSend} />

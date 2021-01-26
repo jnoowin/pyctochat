@@ -20,6 +20,7 @@ interface CanvasProps {
   draw: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   clearCanvas: () => void;
   cleared: boolean;
+  handleTyping: (e: KeyboardEvent | { key: string }) => void;
 }
 
 const CanvasContext = React.createContext<CanvasProps | null>(null);
@@ -139,7 +140,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
     }
   };
 
-  const typingCallback = (e: KeyboardEvent) => {
+  const typingCallback = (e: KeyboardEvent | { key: string }) => {
     const ref = typingRef.current;
     const context = contextRef.current;
     const canvas = canvasRef.current;
@@ -221,6 +222,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         draw,
         clearCanvas,
         cleared,
+        handleTyping,
       }}
     >
       {children}
