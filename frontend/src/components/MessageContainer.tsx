@@ -7,26 +7,15 @@ interface MCProps {
 
 const MessageContainer: React.FC<MCProps> = ({ message }: MCProps) => {
   return (
-    <>
-      {message.canvas ? (
-        <div>
-          <label className="nameplate">blarghnog</label>
-          <img
-            className="canvas-area pointer-events-none"
-            src={message.canvas}
-            alt="message"
-            draggable="false"
-          ></img>
-        </div>
-      ) : (
-        <div className="canvas-area flex flex-row">
-          <p className="flex flex-grow">
-            <b>{message.user}</b>: {message.text}
-          </p>
-          <p>{message.date.toLocaleString()}</p>
-        </div>
-      )}
-    </>
+    <div>
+      <label className="nameplate">blarghnog</label>
+      <img
+        className="canvas-area mt-0 pointer-events-none"
+        src={message.canvas}
+        alt="message"
+        draggable="false"
+      ></img>
+    </div>
   );
 };
 

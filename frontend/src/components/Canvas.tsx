@@ -12,7 +12,7 @@ const Canvas: React.FC = () => {
 
   return (
     <canvas
-      className="canvas-area mr-0 mb-0 w-full md:w-max"
+      className="canvas-area mb-0"
       onMouseDown={canvasContext!.startDrawing}
       onMouseUp={canvasContext!.finishDrawing}
       onMouseMove={canvasContext!.draw}

@@ -41,6 +41,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
       const canvasElem = document.getElementById("canvas");
       if (canvasRef && canvasRef.current && canvasElem) {
         canvasRef.current.width = canvasElem.scrollWidth;
+        drawLines();
       }
     });
   }, []);
@@ -97,10 +98,19 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         context.fillStyle = "white";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "black";
+        drawLines();
+
+        context.lineCap = "round";
+        context.strokeStyle = "black";
+        context.lineWidth = 5;
+        context.font = "2rem Arial";
+
+        typingRef.current.text = "";
+        typingRef.current.textWidth = 0;
+
+        setCleared(true);
       }
     }
-    drawLines();
-    setCleared(true);
   };
 
   const getLines = (newLine: boolean): void => {
@@ -146,6 +156,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         context.strokeText(ref.text, ref.offset.x, ref.offset.y);
         context.strokeStyle = "black";
         context.fillText(ref.text, ref.offset.x, ref.offset.y);
+        setCleared(false);
       } else if (e.key === "Backspace" && ref.text.length > 0) {
         context.strokeStyle = "white";
         context.strokeText(ref.text, ref.offset.x, ref.offset.y);
@@ -159,8 +170,9 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         context.fillText(ref.text, ref.offset.x, ref.offset.y);
 
         if (ref.textWidth <= 0) getLines(false);
+      } else if (e.key === "Backspace") {
+        setCleared(true);
       }
-      console.log(ref);
     }
   };
 

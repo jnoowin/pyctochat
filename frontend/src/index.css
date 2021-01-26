@@ -6,8 +6,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  scrollbar-width: thin;
-  scrollbar-color: rgb(165, 165, 165) rgba(0, 0, 0, 0);
+  scrollbar-width: none;
 }
 
 *::-webkit-scrollbar {
@@ -36,11 +35,11 @@
 }
 
 .canvas-area {
-  @apply bg-white rounded-md m-2 min-h-200;
+  @apply bg-white rounded-md m-2 h-200 mr-0 w-full sm:w-650;
 }
 
 .nameplate {
-  @apply flex transform translate-y-7 h-7 max-w-28 truncate text-center bg-blue-100 rounded-tl-md rounded-br-md;
+  @apply flex transform translate-y-7 ml-2 h-7 w-28 truncate text-center bg-blue-100 rounded-tl-md rounded-br-md;
 }
 
 .keyboard-bg > div {

@@ -3,8 +3,7 @@ export const SEND_MESSAGE = "SEND_MESSAGE";
 
 export interface Message {
   user: string;
-  text?: string;
-  canvas?: string;
+  canvas: string;
   date: Date;
 }
 
