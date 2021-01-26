@@ -23,11 +23,6 @@ const WebSocketContext = createContext<WebSocketProps | null>(null);
 const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   const dispatch = useDispatch();
 
-  const handleSendMessage = (message: Message) => {
-    dispatch(sendMessage(message));
-    socket.emit("send-message", message);
-  };
-
   useEffect(() => {
     socket.on("connect", () => {
       axios
@@ -46,6 +41,12 @@ const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
       dispatch(sendMessage(message));
     });
   }, [dispatch]);
+
+  const handleSendMessage = (message: Message) => {
+    dispatch(sendMessage(message));
+    socket.emit("send-message", message);
+  };
+
   return (
     <WebSocketContext.Provider value={{ socket: socket, handleSendMessage }}>
       <>{children}</>

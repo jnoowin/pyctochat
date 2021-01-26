@@ -10,7 +10,7 @@ import { ChildProps } from "./WebSocketProvider";
 interface CanvasProps {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>;
-  initCanvas: Function;
+  initCanvas: () => void;
   startDrawing: (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
   ) => void;
@@ -29,12 +29,79 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const typingRef = useRef({
     text: "",
-    textWidth: 60,
-    offset: { x: 60, y: 0 },
+    textWidth: 120,
+    offset: { x: 120, y: 0 },
     textArr: new Array<{ textWidth: number; text: string }>(),
   });
   const [drawing, setDrawing] = useState(false);
   const [cleared, setCleared] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      const canvasElem = document.getElementById("canvas");
+      if (canvasRef && canvasRef.current && canvasElem) {
+        canvasRef.current.width = canvasElem.scrollWidth;
+      }
+    });
+  }, []);
+
+  const initCanvas = () => {
+    if (canvasRef && canvasRef.current) {
+      const canvas = canvasRef.current;
+      canvas.width = 650;
+      canvas.height = 200;
+      const context = canvas.getContext("2d");
+      if (context) {
+        drawLines(context);
+        context.scale(1, 1);
+        context.lineCap = "round";
+        context.strokeStyle = "black";
+        context.lineWidth = 5;
+        context.font = "2rem Arial";
+        contextRef.current = context;
+      }
+    }
+  };
+
+  const startDrawing = ({ nativeEvent }: { nativeEvent: MouseEvent }) => {
+    const { offsetX, offsetY } = nativeEvent;
+    if (contextRef && contextRef.current) {
+      contextRef.current.beginPath();
+      contextRef.current.moveTo(offsetX, offsetY);
+      setDrawing(true);
+    }
+    setCleared(false);
+  };
+
+  const finishDrawing = () => {
+    if (contextRef && contextRef.current) {
+      contextRef.current.closePath();
+      setDrawing(false);
+    }
+  };
+
+  const draw = ({ nativeEvent }: { nativeEvent: MouseEvent }) => {
+    if (!drawing) return;
+    const { offsetX, offsetY } = nativeEvent;
+    if (contextRef && contextRef.current) {
+      contextRef.current.lineTo(offsetX, offsetY);
+      contextRef.current.stroke();
+    }
+  };
+
+  const clearCanvas = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.fillStyle = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = "black";
+      }
+    }
+    drawLines();
+    setCleared(true);
+  };
 
   const getLines = (newLine: boolean): void => {
     const ref = typingRef.current;
@@ -55,7 +122,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
           ref.textWidth = lastLine!.textWidth;
 
           if (ref.textArr.length === 0) {
-            ref.offset.x = 60;
+            ref.offset.x = 120;
           }
         }
       }
@@ -129,64 +196,6 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         }
       }
     }
-  };
-
-  const initCanvas = () => {
-    if (canvasRef && canvasRef.current) {
-      const canvas = canvasRef.current;
-      canvas.width = 650;
-      canvas.height = 200;
-      const context = canvas.getContext("2d");
-      if (context) {
-        drawLines(context);
-        context.scale(1, 1);
-        context.lineCap = "round";
-        context.strokeStyle = "black";
-        context.lineWidth = 5;
-        context.font = "2rem Arial";
-        contextRef.current = context;
-      }
-    }
-  };
-
-  const startDrawing = ({ nativeEvent }: { nativeEvent: MouseEvent }) => {
-    const { offsetX, offsetY } = nativeEvent;
-    if (contextRef && contextRef.current) {
-      contextRef.current.beginPath();
-      contextRef.current.moveTo(offsetX, offsetY);
-      setDrawing(true);
-    }
-    setCleared(false);
-  };
-
-  const finishDrawing = () => {
-    if (contextRef && contextRef.current) {
-      contextRef.current.closePath();
-      setDrawing(false);
-    }
-  };
-
-  const draw = ({ nativeEvent }: { nativeEvent: MouseEvent }) => {
-    if (!drawing) return;
-    const { offsetX, offsetY } = nativeEvent;
-    if (contextRef && contextRef.current) {
-      contextRef.current.lineTo(offsetX, offsetY);
-      contextRef.current.stroke();
-    }
-  };
-
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const context = canvas.getContext("2d");
-      if (context) {
-        context.fillStyle = "white";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = "black";
-      }
-    }
-    drawLines();
-    setCleared(true);
   };
 
   return (

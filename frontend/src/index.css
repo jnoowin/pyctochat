@@ -6,6 +6,21 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(165, 165, 165) rgba(0, 0, 0, 0);
+}
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(165, 165, 165);
+  border-radius: 20px;
 }
 
 .body {
@@ -21,12 +36,11 @@
 }
 
 .canvas-area {
-  @apply bg-white h-60 w-full rounded-md mx-2 mt-2;
+  @apply bg-white rounded-md m-2 min-h-200;
 }
 
 .nameplate {
-  @apply flex transform h-7 translate-y-7 truncate text-center bg-blue-100 rounded-tl-md rounded-br-md border border-black;
-  max-width: 7rem;
+  @apply flex transform translate-y-7 h-7 max-w-28 truncate text-center bg-blue-100 rounded-tl-md rounded-br-md;
 }
 
 .keyboard-bg > div {
@@ -34,7 +48,7 @@
 }
 
 .keyboard-btn > div > div > div {
-  @apply bg-gray-100 hover:bg-gray-200 active:bg-gray-400 rounded-none border-none shadow-none !important;
+  @apply bg-gray-100 p-0 hover:bg-gray-200 active:bg-gray-400 rounded-none border-none shadow-none !important;
 }
 
 .side-label {

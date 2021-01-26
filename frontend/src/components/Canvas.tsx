@@ -5,17 +5,18 @@ const Canvas: React.FC = () => {
   const canvasContext = useCanvasContext();
 
   useEffect(() => {
-    if (canvasContext) canvasContext.initCanvas();
+    if (canvasContext) {
+      canvasContext.initCanvas();
+    }
   }, []);
 
   return (
     <canvas
-      className="canvas-area"
-      style={{ width: "53rem" }}
-      onMouseDown={canvasContext?.startDrawing}
-      onMouseUp={canvasContext?.finishDrawing}
-      onMouseMove={canvasContext?.draw}
-      ref={canvasContext?.canvasRef}
+      className="canvas-area mr-0 mb-0 w-full md:w-max"
+      onMouseDown={canvasContext!.startDrawing}
+      onMouseUp={canvasContext!.finishDrawing}
+      onMouseMove={canvasContext!.draw}
+      ref={canvasContext!.canvasRef}
       id="canvas"
     ></canvas>
   );

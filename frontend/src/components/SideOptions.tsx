@@ -4,7 +4,7 @@ import { BiEraser } from "react-icons/bi";
 
 const SideOptions = () => {
   return (
-    <div className="flex flex-col bg-white">
+    <div className="w-8 flex flex-col bg-white">
       <label className="side-label" htmlFor="up">
         <svg
           id="up"

@@ -134,22 +134,24 @@ export const CopyButton: React.FC = () => {
       width="80"
       height="80"
     >
-      <line x1="15" y1="35" x2="27" y2="35" stroke="black"></line>
-      <line x1="27" y1="35" x2="27" y2="30" stroke="black"></line>
-      <polygon
-        points="15,30 15,50 65,50 65,30"
-        fill="none"
-        stroke="black"
-      ></polygon>
-      <g transform="rotate(180, 40, 20) translate(0, -10)">
+      <g transform="translate(0, 10)">
+        <line x1="15" y1="35" x2="27" y2="35" stroke="black"></line>
+        <line x1="27" y1="35" x2="27" y2="30" stroke="black"></line>
         <polygon
-          points="35,15 35,30 45,30 45,15 50,15 39,5 30,15"
-          fill="dimgray"
-          stroke="white"
-          strokeWidth="2"
+          points="15,30 15,50 65,50 65,30"
+          fill="none"
+          stroke="black"
         ></polygon>
-        <line x1="35" y1="36" x2="45" y2="36" stroke="black" />
-        <line x1="35" y1="43" x2="45" y2="43" stroke="black" />
+        <g transform="rotate(180, 40, 20) translate(0, -10)">
+          <polygon
+            points="35,15 35,30 45,30 45,15 50,15 39,5 30,15"
+            fill="dimgray"
+            stroke="white"
+            strokeWidth="2"
+          ></polygon>
+          <line x1="35" y1="36" x2="45" y2="36" stroke="black" />
+          <line x1="35" y1="43" x2="45" y2="43" stroke="black" />
+        </g>
       </g>
     </svg>
   );
