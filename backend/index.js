@@ -3,10 +3,9 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-
 const cors = require("cors");
-
 const { Message, Room } = require("./mongodb");
+const LZString = require("./lz-string");
 
 app.use(express.json());
 app.use(cors());
@@ -14,11 +13,9 @@ app.use(cors());
 io.on("connection", function (socket) {
   console.log("connected", socket.id);
   socket.on("send-message", function (message) {
-    console.log("send", message);
     const messageModel = new Message({
       user: message.user,
-      text: message.text,
-      canvas: message.canvas,
+      canvas: LZString.compressToEncodedURIComponent(message.canvas),
       date: message.date,
     });
 
@@ -31,7 +28,16 @@ io.on("connection", function (socket) {
 
 app.get("/room/:id", (_, response) => {
   Message.find({}).then((chatlog) => {
-    response.json(chatlog.map((message) => message.toJSON()));
+    response.json(
+      chatlog.map((message) => {
+        console.log(message.canvas);
+        message.toJSON();
+        message.canvas = LZString.decompressFromEncodedURIComponent(
+          message.canvas
+        );
+        return message;
+      })
+    );
   });
 });
 

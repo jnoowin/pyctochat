@@ -23,7 +23,6 @@ mongoose
 // schema for message
 const MessageSchema = new mongoose.Schema({
   user: String,
-  text: String,
   canvas: String,
   date: Date,
 });
