@@ -1,5 +1,4 @@
 import React from "react";
-import { BsPencil } from "react-icons/bs";
 
 interface SendProps {
   handleSend: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
@@ -9,16 +8,12 @@ interface ClearProps {
   handleClear: () => void;
 }
 
-interface SwapProps {
-  showCanvas: boolean;
-  handleSwap: () => void;
-}
-
 export const SendButton: React.FC<SendProps> = ({ handleSend }: SendProps) => {
   return (
     <svg
       className="btn-input border-2 border-b-0 rounded-tl-md"
       onClick={handleSend}
+      viewBox="0 0 80 80"
       width="80"
       height="80"
     >
@@ -49,8 +44,9 @@ export const EraseButton: React.FC<ClearProps> = ({
 }: ClearProps) => {
   return (
     <svg
-      className="btn-input border-2 border-b-0"
+      className="btn-input border-2 border-b-0 rounded-bl-md"
       onClick={handleClear}
+      viewBox="0 0 80 80"
       width="80"
       height="80"
     >
@@ -130,34 +126,31 @@ export const EraseButton: React.FC<ClearProps> = ({
   );
 };
 
-export const SwapButton: React.FC<SwapProps> = ({
-  showCanvas,
-  handleSwap,
-}: SwapProps) => {
+export const CopyButton: React.FC = () => {
   return (
-    <>
-      {showCanvas ? (
-        <svg
-          className="btn-input border-2 rounded-bl-md"
-          onClick={handleSwap}
-          width="80"
-          height="80"
-        >
-          <text className="font-mono text-3xl" x="20" y="40">
-            Aa
-          </text>
-          <text className="font-mono text-sm" x="20" y="55">
-            text
-          </text>
-        </svg>
-      ) : (
-        <div
-          className="btn-input border-2 rounded-bl-md flex flex-shrink text-gray-600 justify-center items-center text-4xl"
-          onClick={handleSwap}
-        >
-          <BsPencil />
-        </div>
-      )}
-    </>
+    <svg
+      className="btn-input border-2 border-b-0"
+      viewBox="0 0 80 80"
+      width="80"
+      height="80"
+    >
+      <line x1="15" y1="35" x2="27" y2="35" stroke="black"></line>
+      <line x1="27" y1="35" x2="27" y2="30" stroke="black"></line>
+      <polygon
+        points="15,30 15,50 65,50 65,30"
+        fill="none"
+        stroke="black"
+      ></polygon>
+      <g transform="rotate(180, 40, 20) translate(0, -10)">
+        <polygon
+          points="35,15 35,30 45,30 45,15 50,15 39,5 30,15"
+          fill="dimgray"
+          stroke="white"
+          strokeWidth="2"
+        ></polygon>
+        <line x1="35" y1="36" x2="45" y2="36" stroke="black" />
+        <line x1="35" y1="43" x2="45" y2="43" stroke="black" />
+      </g>
+    </svg>
   );
 };

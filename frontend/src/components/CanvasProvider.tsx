@@ -20,8 +20,6 @@ interface CanvasProps {
   draw: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   clearCanvas: () => void;
   cleared: boolean;
-  typing: boolean;
-  handleSwap: () => void;
 }
 
 const CanvasContext = React.createContext<CanvasProps | null>(null);
@@ -37,11 +35,6 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   });
   const [drawing, setDrawing] = useState(false);
   const [cleared, setCleared] = useState(true);
-  const [typing, setTyping] = useState(false);
-
-  const handleSwap = () => {
-    setTyping(!typing);
-  };
 
   const getLines = (newLine: boolean): void => {
     const ref = typingRef.current;
@@ -207,8 +200,6 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         draw,
         clearCanvas,
         cleared,
-        typing,
-        handleSwap,
       }}
     >
       {children}
