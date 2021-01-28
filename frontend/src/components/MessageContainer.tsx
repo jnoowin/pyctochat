@@ -1,5 +1,5 @@
 import React from "react";
-import { Message } from "../redux/types";
+import { Message } from "../types/chatlog";
 
 interface MCProps {
   message: Message;

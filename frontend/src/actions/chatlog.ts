@@ -1,4 +1,9 @@
-import { Message, SET_CHATLOG, SEND_MESSAGE, ChatActionTypes } from "./types";
+import {
+  Message,
+  SET_CHATLOG,
+  SEND_MESSAGE,
+  ChatActionTypes,
+} from "../types/chatlog";
 
 export function setChatlog(chatlog: Message[]): ChatActionTypes {
   return {

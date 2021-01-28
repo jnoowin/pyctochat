@@ -1,7 +1,7 @@
 import React, { useContext, createContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setChatlog, sendMessage } from "../redux/action";
-import { Message } from "../redux/types";
+import { setChatlog, sendMessage } from "../actions/chatlog";
+import { Message } from "../types/chatlog";
 import io from "socket.io-client";
 import axios from "axios";
 
@@ -11,7 +11,7 @@ export interface ChildProps {
 
 interface WebSocketProps {
   socket: SocketIOClient.Socket;
-  handleSendMessage: Function;
+  handleSendMessage: (message: Message) => void;
 }
 
 const socket: SocketIOClient.Socket = io("http://localhost:3001", {

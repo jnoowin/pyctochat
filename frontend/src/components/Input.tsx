@@ -16,10 +16,10 @@ const Input = () => {
     e.preventDefault();
     if (canvasContext && canvasContext.cleared) return;
 
-    if (ws && canvasContext) {
+    if (ws && canvasContext && canvasContext.canvasRef.current) {
       ws.handleSendMessage({
         user: "blarghnog",
-        canvas: canvasContext.canvasRef.current?.toDataURL(),
+        canvas: canvasContext.canvasRef.current.toDataURL(),
         date: new Date(),
       });
       canvasContext.clearCanvas();

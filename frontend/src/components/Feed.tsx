@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Chatlog } from "../redux/types";
+import { Chatlog } from "../types/chatlog";
 import MessageContainer from "./MessageContainer";
 
 const Feed: React.FC = () => {

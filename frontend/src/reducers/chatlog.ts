@@ -1,10 +1,15 @@
-import { Chatlog, SET_CHATLOG, SEND_MESSAGE, ChatActionTypes } from "./types";
+import {
+  Chatlog,
+  SET_CHATLOG,
+  SEND_MESSAGE,
+  ChatActionTypes,
+} from "../types/chatlog";
 
 const initialState: Chatlog = {
   chatlog: [],
 };
 
-export default function reducer(
+export default function chatlog(
   state = initialState,
   action: ChatActionTypes
 ): Chatlog {
