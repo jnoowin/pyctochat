@@ -1,68 +1,34 @@
 import React, { useState } from "react";
-import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, setRoom } from "../actions/user";
+import { RootState } from "../types/interfaces";
 import ColorPicker from "../components/ColorPicker";
-import { BsArrowClockwise } from "react-icons/bs";
+import UserForm from "../components/UserForm";
+import { nanoid } from "nanoid";
 
 const Landing: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [roomcode, setRoomcode] = useState(nanoid(8));
+  const dispatch = useDispatch();
+  const color = useSelector((state: RootState) => state.user.color);
+  const [isCreate, setIsCreate] = useState(true);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(e);
+  const handleSwap = () => {
+    setIsCreate(!isCreate);
+    dispatch(setUser("", "username"));
+    dispatch(setRoom(nanoid(8)));
   };
 
   return (
-    <div className="w-screen h-screen bg-blue-200">
-      <main className="h-screen w-screen md:w-96 bg-white shadow-xl items-center pt-6 px-8">
-        <section className="w-full">
-          <h2 className="text-3xl font-bold mb-12">Pyctochat</h2>
+    <div className={`w-screen min-h-screen flex bg-${color}-200`}>
+      <main className="w-full min-h-screen md:w-96 md:shadow-2xl bg-white items-center pt-6 px-8">
+        <h2 className="text-3xl font-bold mb-12">Pyctochat</h2>
+        <UserForm isCreate={isCreate} />
 
-          <h1 className="text-4xl font-semibold mb-4">Create a room</h1>
+        <button className="text-blue-500" onClick={handleSwap}>
+          {isCreate ? "or join a room." : "or create a room."}
+        </button>
+        <hr className="my-8"></hr>
 
-          <label className="land-label" htmlFor="username">
-            Username:
-          </label>
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="land-input"
-            id="username"
-            type="text"
-          ></input>
-
-          <label className="land-label" htmlFor="code">
-            Room-code:
-          </label>
-          <input
-            value={roomcode}
-            onChange={(e) => setRoomcode(e.target.value)}
-            className="land-input"
-            id="code"
-            type="text"
-            required
-          ></input>
-          <div className="flex flex-row items-center mb-6">
-            <BsArrowClockwise
-              className="transition duration-300 transform hover:rotate-180 cursor-pointer text-3xl mr-4"
-              onClick={() => setRoomcode(nanoid(8))}
-            />
-            <p className="text-gray-600">Don't like your code? Enter one!</p>
-          </div>
-
-          <hr className="my-8"></hr>
-
-          <h1 className="text-4xl font-semibold mb-4">Join a room</h1>
-
-          <label className="land-label" htmlFor="code2">
-            Room-code:
-          </label>
-          <input className="land-input" id="code2"></input>
-
-          <hr className="my-8"></hr>
-
-          <ColorPicker />
-        </section>
+        <ColorPicker />
       </main>
     </div>
   );

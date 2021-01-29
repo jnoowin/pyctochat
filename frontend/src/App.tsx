@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <Router>
         <Layout>
           <Switch>
-            <Route path="/" component={Landing} />
+            <Route exact path="/" component={Landing} />
             <WebSocketProvider>
               <CanvasProvider>
                 <Route path="/chat" component={Chat} />
