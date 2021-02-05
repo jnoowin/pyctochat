@@ -5,7 +5,7 @@ import React, {
   useContext,
   useCallback,
 } from "react";
-import { ChildProps } from "./WebSocketProvider";
+import { ChildProps } from "../types/interfaces";
 
 interface CanvasProps {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;

@@ -1,7 +1,6 @@
 import React from "react";
 import Landing from "./pages/Landing";
 import Chat from "./pages/Chat";
-import Layout from "./components/Layout";
 import WebSocketProvider from "./components/WebSocketProvider";
 import CanvasProvider from "./components/CanvasProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -12,16 +11,14 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Layout>
-          <Switch>
-            <Route exact path="/" component={Landing} />
-            <WebSocketProvider>
-              <CanvasProvider>
-                <Route path="/chat" component={Chat} />
-              </CanvasProvider>
-            </WebSocketProvider>
-          </Switch>
-        </Layout>
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <WebSocketProvider>
+            <CanvasProvider>
+              <Route path="/room/:id" component={Chat} />
+            </CanvasProvider>
+          </WebSocketProvider>
+        </Switch>
       </Router>
     </Provider>
   );

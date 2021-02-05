@@ -1,9 +1,32 @@
 import axios from "axios";
-import { Chatlog } from "../redux/types";
+import { Message } from "../types/chatlog";
 
-export function getChatlog() {
-  axios
-    .get("http://localhost:3001/room/1")
-    .then((result) => console.log(result))
-    .catch((error) => console.log(error));
+export function getChatlog(room: string) {
+  return axios
+    .get(`http://localhost:3001/room/${room}`)
+    .then((result) =>
+      result.data.map((message: Message) => {
+        message.date = new Date(message.date);
+        return message;
+      })
+    )
+    .then((chatlog: Message[]) => {
+      return chatlog;
+    })
+    .catch((error) => {
+      console.log("Unable to retrieve chat", error);
+      return [];
+    });
+}
+
+export function createRoom(room: string) {
+  return axios
+    .post("http://localhost:3001/room/", { _id: room })
+    .catch((error) => error.response);
+}
+
+export function checkRoom(room: string) {
+  return axios
+    .get("http://localhost:3001/room/", { params: { _id: room } })
+    .catch((error) => error.response);
 }
