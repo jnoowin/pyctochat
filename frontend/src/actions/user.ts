@@ -1,10 +1,4 @@
-import {
-  SET_USER,
-  SET_ROOM,
-  User,
-  Room,
-  UserDetailActionTypes,
-} from "../types/user";
+import { SET_USER, SET_ROOM, UserDetailActionTypes } from "../types/user";
 
 export function setUser(
   user: string,

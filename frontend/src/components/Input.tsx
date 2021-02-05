@@ -6,11 +6,15 @@ import { SendButton, EraseButton, CopyButton } from "./SVG";
 import Canvas from "./Canvas";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../types/interfaces";
 
 const Input = () => {
   const ws = useWebSocketContext();
   const canvasContext = useCanvasContext();
   const [layout, setLayout] = useState("default");
+  const username = useSelector((state: RootState) => state.user.username);
+  const color = useSelector((state: RootState) => state.user.color);
 
   const handleSend = (e: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
     e.preventDefault();
@@ -45,8 +49,10 @@ const Input = () => {
       <div className="flex flex-col h-full">
         <section className="h-full">
           <div className="h-8 w-full bg-white"></div>
-          <label className="absolute h-7 w-28 truncate bg-blue-100 rounded-tl-md rounded-br-md m-2">
-            Player 1
+          <label
+            className={`absolute h-7 w-28 truncate bg-${color}-100 rounded-tl-md rounded-br-md m-2`}
+          >
+            {username}
           </label>
           <Canvas />
         </section>

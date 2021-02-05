@@ -55,7 +55,7 @@
 }
 
 .nameplate {
-  @apply flex transform translate-y-7 ml-2 h-7 w-28 truncate text-center bg-blue-100 rounded-tl-md rounded-br-md;
+  @apply flex transform translate-y-7 ml-2 h-7 w-28 truncate text-center rounded-tl-md rounded-br-md;
 }
 
 .keyboard-bg > div {
