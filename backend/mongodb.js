@@ -38,15 +38,8 @@ MessageSchema.set("toJSON", {
 
 /*----------------------------------------*/
 const RoomSchema = new mongoose.Schema({
-  room: [],
-});
-
-// transforms _id -> id and delete __v
-RoomSchema.set("toJSON", {
-  transform: (_doc, obj) => {
-    delete obj._id;
-    delete obj.__v;
-  },
+  _id: String,
+  chatlog: [MessageSchema],
 });
 
 module.exports = {

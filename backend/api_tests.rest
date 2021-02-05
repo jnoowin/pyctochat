@@ -1,11 +1,17 @@
 GET http://localhost:3001/room/1
 
 ###
-POST http://localhost:3001/room/1  HTTP/1.1
+POST http://localhost:3001/room/  HTTP/1.1
 content-type: application/json
 
 {
-  "user": "TheLegend27",
-  "text": "Cool Advertisment",
-  "date": "a Javascript Date object"
+  "id": "coolid"
+}
+
+###
+POST http://localhost:3001/room/ HTTP/1.1
+content-type: application/json
+
+{
+  "id": []
 }
