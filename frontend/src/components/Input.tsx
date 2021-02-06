@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideOptions from "./SideOptions";
 import { useWebSocketContext } from "../components/WebSocketProvider";
 import { useCanvasContext } from "./CanvasProvider";
@@ -8,6 +8,7 @@ import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../types/interfaces";
+import { nanoid } from "nanoid";
 
 const Input = () => {
   const ws = useWebSocketContext();
@@ -15,6 +16,11 @@ const Input = () => {
   const [layout, setLayout] = useState("default");
   const username = useSelector((state: RootState) => state.user.username);
   const color = useSelector((state: RootState) => state.user.color);
+  const chatlog = useSelector((state: RootState) => state.chatlog.chatlog);
+
+  useEffect(() => {
+    document.getElementById("feed")!.scroll(0, chatlog.length * 200);
+  }, [chatlog.length]);
 
   const handleSend = (e: React.MouseEvent<SVGSVGElement, MouseEvent>): void => {
     e.preventDefault();
@@ -25,6 +31,7 @@ const Input = () => {
         user: "blarghnog",
         canvas: canvasContext.canvasRef.current.toDataURL(),
         date: new Date(),
+        id: nanoid(),
       });
       canvasContext.clearCanvas();
     }

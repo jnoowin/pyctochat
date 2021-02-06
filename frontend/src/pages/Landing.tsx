@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, setRoom } from "../actions/user";
+import { setRoom } from "../actions/user";
 import { RootState } from "../types/interfaces";
 import ColorPicker from "../components/ColorPicker";
 import UserForm from "../components/UserForm";
@@ -13,7 +13,6 @@ const Landing: React.FC = () => {
 
   const handleSwap = () => {
     setIsCreate(!isCreate);
-    dispatch(setUser("", "username"));
     dispatch(setRoom(nanoid(8)));
   };
 

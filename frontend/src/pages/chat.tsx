@@ -10,9 +10,9 @@ const Chat: React.FC = () => {
     <div
       className={`w-screen h-screen bg-${color}-100 flex justify-center overflow-x-hidden`}
     >
-      <main className="bg-gray-400 h-screen flex flex-col-reverse items-center">
-        <Input />
+      <main className="bg-gray-400 flex flex-col items-center justify-end">
         <Feed />
+        <Input />
       </main>
     </div>
   );

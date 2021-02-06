@@ -31,13 +31,17 @@ const UserForm: React.FC<UserFormProps> = ({ isCreate }: UserFormProps) => {
 
     if (isCreate) {
       createRoom(room).then((res) => {
-        setResponse(res);
-        if (res.status === 200) history.push(`/room/${room}`);
+        if (res) {
+          setResponse(res);
+          if (res.status === 200) history.push(`/room/${room}`);
+        }
       });
     } else {
       checkRoom(room).then((res) => {
-        setResponse(res);
-        if (res.status === 200) history.push(`/room/${room}`);
+        if (res) {
+          setResponse(res);
+          if (res.status === 200) history.push(`/room/${room}`);
+        }
       });
     }
 

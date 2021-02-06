@@ -34,7 +34,7 @@ const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
     } else history.push("/");
 
     checkRoom(pathid).then((res) => {
-      if (res.status !== 200) {
+      if (res && res.status !== 200) {
         history.push("/");
       }
     });

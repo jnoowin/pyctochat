@@ -18,7 +18,7 @@ export default function chatlog(
     case SET_CHATLOG:
       return { chatlog: action.payload };
     case SEND_MESSAGE:
-      return { chatlog: [...state.chatlog, action.payload] };
+      return { chatlog: [action.payload, ...state.chatlog] };
     default:
       return state;
   }

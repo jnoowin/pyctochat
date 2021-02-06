@@ -5,6 +5,7 @@ export interface Message {
   user: string;
   canvas: string;
   date: Date;
+  id: string;
 }
 
 export interface Chatlog {

@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { ChildProps } from "../types/interfaces";
+import { Message } from "../types/chatlog";
 
 interface CanvasProps {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
@@ -20,6 +21,7 @@ interface CanvasProps {
   draw: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   clearCanvas: () => void;
   cleared: boolean;
+  getRecent: (chatlog: Message[], username: string) => void;
   handleTyping: (e: KeyboardEvent | { key: string }) => void;
 }
 
@@ -42,8 +44,8 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
       const canvasElem = document.getElementById("canvas");
       if (canvasRef && canvasRef.current && canvasElem) {
         canvasRef.current.width = canvasElem.scrollWidth;
-        drawLines();
       }
+      drawLines();
     });
   }, []);
 
@@ -112,6 +114,19 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         setCleared(true);
       }
     }
+  };
+
+  const getRecent = (chatlog: Message[], username: string) => {
+    const recentImage = new Image();
+    const canvasData = chatlog.find(
+      (message: Message) => message.user === username
+    );
+
+    if (canvasData) recentImage.src = canvasData.canvas;
+
+    if (contextRef && contextRef.current)
+      contextRef.current.drawImage(recentImage, 0, 0);
+    setCleared(false);
   };
 
   const getLines = (newLine: boolean): void => {
@@ -222,6 +237,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         draw,
         clearCanvas,
         cleared,
+        getRecent,
         handleTyping,
       }}
     >

@@ -1,4 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../types/interfaces";
+import { useCanvasContext } from "../components/CanvasProvider";
 
 interface SendProps {
   handleSend: (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => void;
@@ -127,12 +130,21 @@ export const EraseButton: React.FC<ClearProps> = ({
 };
 
 export const CopyButton: React.FC = () => {
+  const chatlog = useSelector((state: RootState) => state.chatlog.chatlog);
+  const username = useSelector((state: RootState) => state.user.username);
+  const canvasRef = useCanvasContext();
+
+  const handleClick = () => {
+    if (canvasRef) canvasRef.getRecent(chatlog, username);
+  };
+
   return (
     <svg
       className="btn-input border-2 border-b-0"
       viewBox="0 0 80 80"
       width="80"
       height="80"
+      onClick={handleClick}
     >
       <g transform="translate(0, 10)">
         <line x1="15" y1="35" x2="27" y2="35" stroke="black"></line>
