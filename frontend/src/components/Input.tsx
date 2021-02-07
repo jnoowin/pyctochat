@@ -28,9 +28,10 @@ const Input = () => {
 
     if (ws && canvasContext && canvasContext.canvasRef.current) {
       ws.handleSendMessage({
-        user: "blarghnog",
+        user: username,
         canvas: canvasContext.canvasRef.current.toDataURL(),
         date: new Date(),
+        color: color,
         id: nanoid(),
       });
       canvasContext.clearCanvas();

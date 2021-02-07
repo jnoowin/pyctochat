@@ -5,6 +5,7 @@ export interface Message {
   user: string;
   canvas: string;
   date: Date;
+  color: string;
   id: string;
 }
 

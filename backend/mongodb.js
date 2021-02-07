@@ -25,15 +25,13 @@ const MessageSchema = new mongoose.Schema({
   user: String,
   canvas: String,
   date: Date,
+  color: String,
+  _id: String,
 });
 
 // transforms _id -> id and delete __v
 MessageSchema.set("toJSON", {
-  transform: (_doc, obj) => {
-    obj.id = obj._id.toString();
-    delete obj._id;
-    delete obj.__v;
-  },
+  transform: (_doc, obj) => delete obj.__v,
 });
 
 /*----------------------------------------*/

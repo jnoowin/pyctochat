@@ -35,6 +35,8 @@ io.on("connection", function (socket) {
       user: message.user,
       canvas: LZString.compressToEncodedURIComponent(message.canvas),
       date: message.date,
+      color: message.color,
+      _id: message.id,
     });
 
     // find room to save message
