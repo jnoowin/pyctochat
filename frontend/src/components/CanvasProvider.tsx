@@ -39,16 +39,6 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   const [drawing, setDrawing] = useState(false);
   const [cleared, setCleared] = useState(true);
 
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      const canvasElem = document.getElementById("canvas");
-      if (canvasRef && canvasRef.current && canvasElem) {
-        canvasRef.current.width = canvasElem.scrollWidth;
-      }
-      drawLines();
-    });
-  }, []);
-
   const initCanvas = () => {
     if (canvasRef && canvasRef.current) {
       const canvas = canvasRef.current;
@@ -186,7 +176,7 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
         context.fillText(ref.text, ref.offset.x, ref.offset.y);
 
         if (ref.textWidth <= 0) getLines(false);
-      } else if (e.key === "Backspace") {
+      } else if (e.key === "Backspace" && ref.text.length <= 0) {
         setCleared(true);
       }
     }
@@ -225,6 +215,21 @@ const CanvasProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
       }
     }
   };
+
+  const resizeCallback = () => {
+    const canvasElem = document.getElementById("canvas");
+    if (canvasRef && canvasRef.current && canvasElem) {
+      canvasRef.current.width = canvasElem.scrollWidth;
+    }
+    drawLines();
+  };
+
+  const handleResize = useCallback(resizeCallback, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
 
   return (
     <CanvasContext.Provider

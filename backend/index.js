@@ -36,11 +36,10 @@ io.on("connection", function (socket) {
       canvas: LZString.compressToEncodedURIComponent(message.canvas),
       date: message.date,
     });
-    console.log(messageModel);
+
     // find room to save message
     Room.findOne({ _id: _id })
       .then(function (room) {
-        console.log(room);
         room.chatlog.push(messageModel);
         room.save().catch((error) => console.log(error));
       })
