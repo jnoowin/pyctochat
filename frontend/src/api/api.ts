@@ -3,7 +3,7 @@ import { Message } from "../types/chatlog";
 
 export function getChatlog(room: string) {
   return axios
-    .get(`http://localhost:3001/room/${room}`)
+    .get(`/room/${room}`)
     .then((result) =>
       result.data.map((message: Message) => {
         message.date = new Date(message.date);
@@ -20,13 +20,11 @@ export function getChatlog(room: string) {
 }
 
 export function createRoom(room: string) {
-  return axios
-    .post("http://localhost:3001/room/", { _id: room })
-    .catch((error) => error.response);
+  return axios.post("/room/", { _id: room }).catch((error) => error.response);
 }
 
 export function checkRoom(room: string) {
   return axios
-    .get("http://localhost:3001/room/", { params: { _id: room } })
+    .get("/room/", { params: { _id: room } })
     .catch((error) => error.response);
 }

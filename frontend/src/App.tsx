@@ -1,6 +1,6 @@
 import React from "react";
 import Landing from "./pages/Landing";
-import Chat from "./pages/Chat";
+import Chat from "./pages/Chatroom";
 import WebSocketProvider from "./components/WebSocketProvider";
 import CanvasProvider from "./components/CanvasProvider";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

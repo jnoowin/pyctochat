@@ -12,7 +12,7 @@ const Feed: React.FC = () => {
     >
       {chatlog.length > 0 ? (
         chatlog.map((message) => (
-          <div className="flex flex-row" key={message.id}>
+          <div className="flex flex-row" key={message._id}>
             <div className="bg-white w-8 h-full"></div>
             <MessageContainer message={message} />
           </div>

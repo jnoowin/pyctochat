@@ -1,7 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-// mongodb cluster uri
+// mongodb uri
 const uri = process.env.MONGODB_URI;
 
 // connect to cluster
@@ -31,7 +31,9 @@ const MessageSchema = new mongoose.Schema({
 
 // transforms _id -> id and delete __v
 MessageSchema.set("toJSON", {
-  transform: (_doc, obj) => delete obj.__v,
+  transform: (_doc, obj) => {
+    delete obj.__v;
+  },
 });
 
 /*----------------------------------------*/

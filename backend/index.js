@@ -9,6 +9,7 @@ const LZString = require("./lz-string");
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("build"));
 
 // connection to websocket
 io.on("connection", function (socket) {
@@ -107,5 +108,5 @@ app.post("/room/", function (request, response) {
     .catch((error) => response.status(500).send("Server error."));
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 http.listen(PORT, () => console.log(`Server running on port ${PORT}`));

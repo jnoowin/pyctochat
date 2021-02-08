@@ -32,7 +32,7 @@ const Input = () => {
         canvas: canvasContext.canvasRef.current.toDataURL(),
         date: new Date(),
         color: color,
-        id: nanoid(),
+        _id: nanoid(),
       });
       canvasContext.clearCanvas();
     }

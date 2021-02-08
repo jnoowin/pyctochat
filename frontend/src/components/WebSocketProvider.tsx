@@ -18,7 +18,7 @@ const WebSocketProvider: React.FC<ChildProps> = ({ children }: ChildProps) => {
   const dispatch = useDispatch();
   const pathid = useLocation().pathname.split("/")[2];
   const socketRef = useRef<WebSocketProps>({
-    socket: io("http://localhost:3001", {
+    socket: io("/", {
       transports: ["websocket", "polling"],
     }),
     handleSendMessage: function () {},

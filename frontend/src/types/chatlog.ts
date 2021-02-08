@@ -6,7 +6,7 @@ export interface Message {
   canvas: string;
   date: Date;
   color: string;
-  id: string;
+  _id: string;
 }
 
 export interface Chatlog {
