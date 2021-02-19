@@ -13,7 +13,6 @@ export default function chatlog(
   state = initialState,
   action: ChatActionTypes
 ): Chatlog {
-  console.log(state, action);
   switch (action.type) {
     case SET_CHATLOG:
       return { chatlog: action.payload };

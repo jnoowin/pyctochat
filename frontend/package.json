@@ -29,7 +29,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:ui": "rm -rf ../backend/build && craco build && mv build/ ../backend && rm -rf build/"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
