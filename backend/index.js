@@ -51,7 +51,7 @@ io.on("connection", function (socket) {
 });
 
 // get chatlog
-app.get("/room/:id", function (request, response) {
+app.get("/api/room/:id", function (request, response) {
   Room.findOne({ _id: request.params.id })
     .then(function (room) {
       response.json(
@@ -68,7 +68,7 @@ app.get("/room/:id", function (request, response) {
 });
 
 // Check room if exists
-app.get("/room/", function (request, response) {
+app.get("/api/room/", function (request, response) {
   Room.exists({ _id: request.query._id })
     .then(function (exists) {
       if (exists) {
@@ -81,7 +81,7 @@ app.get("/room/", function (request, response) {
 });
 
 // Create room
-app.post("/room/", function (request, response) {
+app.post("/api/room/", function (request, response) {
   if (request.body._id.length < 8) {
     response.status(400).send("Room code must be at least 8 characters long.");
     return;
