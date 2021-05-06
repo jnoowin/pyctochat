@@ -3,7 +3,7 @@ import chatlog from "./chatlog";
 import user from "./user";
 import { createStore } from "redux";
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
   chatlog,
   user,
 });

@@ -7,7 +7,6 @@ import {
 } from "../types/user";
 
 const storedDetails: string | null = localStorage.getItem("user");
-console.log(storedDetails);
 
 let storedUser;
 if (storedDetails) {

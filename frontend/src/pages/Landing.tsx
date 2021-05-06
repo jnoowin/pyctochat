@@ -6,7 +6,7 @@ import ColorPicker from "../components/ColorPicker";
 import UserForm from "../components/UserForm";
 import { nanoid } from "nanoid";
 
-const Landing: React.FC = () => {
+const Landing = () => {
   const dispatch = useDispatch();
   const color = useSelector((state: RootState) => state.user.color);
   const [isCreate, setIsCreate] = useState(true);
