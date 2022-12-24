@@ -6,6 +6,7 @@ const io = require("socket.io")(http);
 const cors = require("cors");
 const { Message, Room } = require("./mongodb");
 const LZString = require("./lz-string");
+const path = require("path");
 
 app.use(express.json());
 app.use(cors());
@@ -86,8 +87,7 @@ app.post("/api/room/", function (request, response) {
     response.status(400).send("Room code must be at least 8 characters long.");
     return;
   }
-
-  Room.exists({ id: request.body._id })
+  Room.exists({ _id: request.body._id })
     .then(function (exists) {
       if (exists) {
         response
@@ -106,6 +106,10 @@ app.post("/api/room/", function (request, response) {
       }
     })
     .catch((error) => response.status(500).send("Server error."));
+});
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 const PORT = process.env.PORT || 3001;
