@@ -6,7 +6,7 @@ Pyctochat is a chatroom web app inspired by the Nintendo DS Pictochat. Some feat
 - Sending drawn or typed messages
 - Choosing your own colored theme
 
-Check it out here [here](https://pyctochat.herokuapp.com/)!
+Check it out here [here](https://pyctochat.onrender.com/)!
 
 ## Technology
 
